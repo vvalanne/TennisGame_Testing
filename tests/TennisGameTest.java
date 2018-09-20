@@ -20,7 +20,7 @@ public class TennisGameTest {
 // "player2 has advantage"
 // "player1 wins"
 // "player2 wins"
-	@Ignore
+	@Test
 	public void testTennisGame_Start() {
 		//Arrange
 		TennisGame game = new TennisGame();
@@ -31,24 +31,20 @@ public class TennisGameTest {
 	}
 	
 	@Test
-	public void testTennisGame_EahcPlayerWin4Points_Score_Deuce() throws TennisGameException {
+	public void testTennisGame_EachPlayerWin4Points_Score_Deuce() throws TennisGameException {
 		//Arrange
 		TennisGame game = new TennisGame();
 		
 		game.player1Scored();
 		game.player1Scored();
-		game.player1Scored();
-		
 		game.player2Scored();
 		game.player2Scored();
-		game.player2Scored();
-		
 		game.player1Scored();
 		game.player2Scored();
 		//Act
-		String score = game.getScore() ;
+		String i = game.getScore();
 		// Assert
-		assertEquals("Tie score incorrect", "deuce", score);		
+		assertEquals("", "deuce",i);		
 	}
 	
 	@Test (expected = TennisGameException.class)
@@ -62,6 +58,24 @@ public class TennisGameTest {
 		game.player1Scored();
 		//Act
 		// This statement should cause an exception
-		game.player1Scored();			
+		//game.player1Scored();
+		String i = game.getScore();
+		assertSame(i, "player1 wins");
+		
 	}		
+	@Test (expected = TennisGameException.class)
+	public void testTennisGame_Player2WinsPointAfterGameEnded_ResultsException() throws TennisGameException {
+		//Arrange
+		TennisGame game = new TennisGame();
+		//Act
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		game.player2Scored();
+		//Act
+		// This statement should cause an exception
+		//game.player1Scored();
+		String i = game.getScore();
+		assertSame(i, "player2 wins");
+	}
 }
